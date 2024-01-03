@@ -45,7 +45,7 @@ export class EventService {
   async findOne(id: number) {
     const event = await this.eventRepository.findOne({
       where: { id },
-      relations: ['eventschedules'],
+      relations: ['schedules'],
     });
     if (!event) {
       throw new NotFoundException('해당 공연을 찾을 수 없습니다.');

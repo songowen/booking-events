@@ -38,14 +38,12 @@ export class BookingService {
     return this.bookingRepository.save(booking);
   }
 
-  async currentReservation(user: User): Promise<Booking[]> {
+  async currentBooking(user: User): Promise<Booking[]> {
     try {
-      console.log({ user: user });  // 전달되는 객체 출력
-      const findUserCurrentReservation = await this.bookingRepository.find({
+      const findUserCurrentBooking = await this.bookingRepository.find({
         where: { user: { id: user.id } },
       });
-      console.log('findUserCurrentReservation', findUserCurrentReservation);
-      return findUserCurrentReservation;
+      return findUserCurrentBooking;
     } catch (err) {
       console.log(err);
     }

@@ -21,6 +21,6 @@ export class BookingController {
 
   @Get()
   async currentReservation(@UserInfo() user: User): Promise<Booking[]> {
-    return await this.bookingService.currentReservation(user);
+    return await this.bookingService.currentBooking(user);
   }
 }
