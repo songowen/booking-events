@@ -2,14 +2,13 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  Index,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { Role } from '../types/userRole.type';
 import { ApiProperty } from '@nestjs/swagger';
-// import { Booking } from 'src/booking/entities/booking.entity';
+import { Booking } from 'src/booking/entities/booking.entity';
 
 @Entity({
   name: 'users',
@@ -46,8 +45,8 @@ export class User {
   @UpdateDateColumn({ type: 'timestamp' })
   updatedAt: Date;
 
-  // @OneToMany(() => Booking, (booking) => booking.user)
-  // bookings: Booking[];
+  @OneToMany(() => Booking, (booking) => booking.user)
+  bookings: Booking[];
 
   constructor(
     username: string,

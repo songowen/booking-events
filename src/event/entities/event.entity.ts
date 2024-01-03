@@ -42,9 +42,29 @@ export class Event {
 
   @UpdateDateColumn({ type: 'timestamp' })
   updatedAt: Date;
+  bookings: any;
+
+  constructor(
+    title: string,
+    description: string,
+    price: number,
+    location: string,
+    seat: number,
+    image: string,
+    category: string,
+  ) {
+    this.title = title;
+    this.description = description;
+    this.price = price;
+    this.location = location;
+    this.seat = seat;
+    this.image = image;
+    this.category = category;
+  }
 
   @OneToMany(() => EventSchedule, (schedule) => schedule.event, { eager: true })
   schedules: EventSchedule[];
+  
 
   // @OneToMany(() => Booking, (booking) => booking.event)
   // bookings: Booking[];

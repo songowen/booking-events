@@ -3,6 +3,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -13,7 +14,7 @@ export class EventSchedule {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'date' })
+  @Column({ type: 'timestamp' })
   date: string;
 
   @CreateDateColumn({ type: 'timestamp' })
@@ -26,5 +27,6 @@ export class EventSchedule {
     this.date = date;
   }
   @ManyToOne(() => Event, (event) => event.schedules)
+  @JoinColumn({ name: 'eventId', referencedColumnName: 'id' })
   event: Event;
 }

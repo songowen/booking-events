@@ -11,9 +11,9 @@ export class EventScheduleController {
 
   @UseGuards(AuthGuard('jwt'))
   @Roles(Role.Admin)
-  @Post(':id')
+  @Post('/:id')
   async create(
-    @Param('id') eventId: string,
+    @Param('id') eventId: number,
     @Body() createEventScheduleDto: CreateEventScheduleDto,
   ) {
     return this.eventScheduleService.create(eventId, createEventScheduleDto);

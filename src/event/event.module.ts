@@ -8,6 +8,6 @@ import { EventSchedule } from 'src/event-schedule/entities/event-schedule.entity
 @Module({
   imports: [TypeOrmModule.forFeature([Event, EventSchedule])],
   providers: [EventService],
-  controllers: [EventController],
+  controllers: [EventController]
 })
 export class EventModule {}

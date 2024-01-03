@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { EventSchedule } from './entities/event-schedule.entity';
 import { Repository } from 'typeorm';
 import { CreateEventScheduleDto } from './dto/createEventSchedule.dto';
+import { Event } from 'src/event/entities/event.entity';
 
 @Injectable()
 export class EventScheduleService {
@@ -14,11 +15,11 @@ export class EventScheduleService {
   ) {}
 
   async create(
-    eventId: string,
+    eventId: number,
     createEventScheduleDto: CreateEventScheduleDto,
   ) {
     const event = await this.eventRepository.findOne({
-      where: { id: 1 },
+      where: { id: eventId },
     });
     if (!event) {
       throw new Error('Event not found');
