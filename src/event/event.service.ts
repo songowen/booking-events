@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Like, Repository } from 'typeorm';
 import { CreateEventDto } from './dto/createEvent.dto';
@@ -15,6 +19,9 @@ export class EventService {
   ) {}
 
   async createEvent(createEventDto: CreateEventDto) {
+    if (createEventDto.seat <= 0) {
+      throw new BadRequestException('좌석 수는 0보다 커야 합니다');
+    }
     return await this.eventRepository.save(
       new Event(
         createEventDto.title,

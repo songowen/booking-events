@@ -4,6 +4,7 @@ import {
   Column,
   ManyToOne,
   CreateDateColumn,
+  JoinColumn,
 } from 'typeorm';
 import { Event } from 'src/event/entities/event.entity';
 import { User } from 'src/user/entities/user.entity';
@@ -16,6 +17,9 @@ export class Booking {
   @Column()
   seats: number;
 
+  @Column()
+  eventId: number;
+
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 
@@ -23,5 +27,6 @@ export class Booking {
   user: User;
 
   @ManyToOne(() => Event, (event) => event.bookings)
+  @JoinColumn({ name: 'eventId' })
   event: Event;
 }

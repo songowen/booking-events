@@ -1,4 +1,4 @@
-// import { Booking } from 'src/booking/entities/booking.entity';
+import { Booking } from 'src/booking/entities/booking.entity';
 import { EventSchedule } from 'src/event-schedule/entities/event-schedule.entity';
 import {
   Column,
@@ -42,7 +42,6 @@ export class Event {
 
   @UpdateDateColumn({ type: 'timestamp' })
   updatedAt: Date;
-  bookings: any;
 
   constructor(
     title: string,
@@ -64,8 +63,7 @@ export class Event {
 
   @OneToMany(() => EventSchedule, (schedule) => schedule.event, { eager: true })
   schedules: EventSchedule[];
-  
 
-  // @OneToMany(() => Booking, (booking) => booking.event)
-  // bookings: Booking[];
+  @OneToMany(() => Booking, (booking) => booking.event)
+  bookings: Booking[];
 }

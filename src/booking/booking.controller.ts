@@ -1,4 +1,12 @@
-import { Controller, Post, Body, UseGuards, Get, Param } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  UseGuards,
+  Get,
+  Param,
+  Req,
+} from '@nestjs/common';
 import { BookingService } from './booking.service';
 import { CreateBookingDto } from './dto/booking.dto';
 import { UserInfo } from 'src/utils/userInfo.decorator';
@@ -14,9 +22,13 @@ import { Booking } from './entities/booking.entity';
 export class BookingController {
   constructor(private readonly bookingService: BookingService) {}
 
-  @Post()
-  async create(@Body() createBookingDto: CreateBookingDto, @UserInfo() user) {
-    return this.bookingService.create(createBookingDto, user);
+  @Post(':eventId')
+  async create(
+    @Param('eventId') eventId: number,
+    @Body() createBookingDto: CreateBookingDto,
+    @Req() req,
+  ) {
+    return this.bookingService.create(eventId, createBookingDto, req.user);
   }
 
   @Get()

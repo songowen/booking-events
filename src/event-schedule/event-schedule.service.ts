@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { EventSchedule } from './entities/event-schedule.entity';
 import { Repository } from 'typeorm';
@@ -18,6 +18,12 @@ export class EventScheduleService {
     eventId: number,
     createEventScheduleDto: CreateEventScheduleDto,
   ) {
+    const { date } = createEventScheduleDto;
+
+    if (!date) {
+      throw new BadRequestException('날짜를 제공해야 합니다');
+    }
+
     const event = await this.eventRepository.findOne({
       where: { id: eventId },
     });

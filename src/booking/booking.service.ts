@@ -17,16 +17,24 @@ export class BookingService {
     private readonly userrepository: Repository<User>,
   ) {}
 
-  async create(createBookingDto: CreateBookingDto, user: User) {
+  async create(
+    eventId: number,
+    createBookingDto: CreateBookingDto,
+    user: User,
+  ) {
     const event = await this.eventRepository.findOne({
-      where: { id: createBookingDto.eventId },
+      where: { id: eventId },
     });
 
+    if (createBookingDto.seats <= 0) {
+      throw new BadRequestException('좌석 수는 0보다 커야합니다.');
+    }
+
     if (!event) {
-      throw new BadRequestException('Event not found');
+      throw new BadRequestException('이벤트를 찾을 수 없습니다.');
     }
     if (event.seat < createBookingDto.seats) {
-      throw new BadRequestException('Not enough seats available');
+      throw new BadRequestException('남은 좌석이 부족합니다.');
     }
     event.seat -= createBookingDto.seats;
     await this.eventRepository.save(event);
@@ -34,6 +42,7 @@ export class BookingService {
     const booking = this.bookingRepository.create({
       ...createBookingDto,
       user,
+      event,
     });
     return this.bookingRepository.save(booking);
   }
